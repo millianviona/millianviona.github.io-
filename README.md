@@ -77,3 +77,22 @@ LIMIT 10
 ```
 
 <img width="1403" height="519" alt="Screenshot 2025-09-09 121045" src="https://github.com/user-attachments/assets/ced2de13-b780-49ad-bba7-679e8d5f9b47" />
+
+**4. What are the total revenue, profit, and units sold??**
+
+```
+SELECT 
+  ROUND(SUM(bottles_sold)) AS total_bottles_sold,
+  ROUND(SUM(sale_dollars)) AS total_revenue,
+  ROUND(SUM((state_bottle_retail-state_bottle_cost) * bottles_sold)) AS total_profit
+FROM `bigquery-public-data.iowa_liquor_sales.sales`
+WHERE 
+  sale_dollars > 0 AND
+  bottles_sold > 0 AND
+  state_bottle_retail > 0 AND
+  state_bottle_cost > 0
+```
+
+<img width="1402" height="189" alt="Screenshot 2025-09-09 125932" src="https://github.com/user-attachments/assets/913b3d3f-3836-4231-ac50-5d81f62dac1c" />
+
+
