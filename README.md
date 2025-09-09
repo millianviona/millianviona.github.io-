@@ -25,9 +25,10 @@ The analysis explores sales trends, store performance, and unusual data entries 
    
 ``
 SELECT
-  city,  
+
+     city,  
   
-  ROUND(SUM(sale_dollars)) AS total_revenue  
+     ROUND(SUM(sale_dollars)) AS total_revenue  
   
 FROM `bigquery-public-data.iowa_liquor_sales.sales`  
 
