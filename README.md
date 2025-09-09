@@ -24,7 +24,7 @@ The analysis explores sales trends, store performance, and unusual data entries 
 I only account positive values. 
 
 #### Queries
-1. Which cities sell the most liquor?
+**1. Which cities sell the most liquor?**
    
 ```
 SELECT 
