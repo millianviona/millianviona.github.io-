@@ -5,8 +5,6 @@ I’m passionate about turning data into insights and sharing my learning journe
 
 Visit me on [Kaggle](https://www.kaggle.com/vionamillian), [Tableau](https://public.tableau.com/app/profile/viona.millian/vizzes), and [Linkedin](https://www.linkedin.com/in/viona-millian/).
 
-##Project
-
 ### Project 1: Iowa Liquor Sales Analysis
 ---
 
@@ -22,9 +20,9 @@ The analysis explores sales trends, store performance, and unusual data entries 
 - What are the most popular products?
 - Are there any anomalies in the data (e.g., negative bottles sold)?
 
-
 #### Queries
 1. Which stores sell the most liquor?
+``
 SELECT 
   city,
   ROUND(SUM(sale_dollars)) AS total_revenue
@@ -33,3 +31,4 @@ WHERE sale_dollars > 0
 GROUP BY city
 ORDER BY total_revenue DESC
 LIMIT 10
+``
