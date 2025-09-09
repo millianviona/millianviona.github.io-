@@ -33,5 +33,7 @@ GROUP BY city
 ORDER BY total_revenue DESC
 LIMIT 10
 ```
+This query shows the top 10 cities with the biggest sales. I only account positive values as `sale_dollars`, a column for revenue, has negative values.
 
 <img width="1406" height="478" alt="Screenshot 2025-09-09 113238" src="https://github.com/user-attachments/assets/be32292e-bae8-40b5-9c89-65d9c07420d0" />
+
