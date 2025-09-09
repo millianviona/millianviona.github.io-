@@ -32,7 +32,7 @@ SELECT
   
 FROM `bigquery-public-data.iowa_liquor_sales.sales`  
 
-WHERE sale_dollars > 0  
+      WHERE sale_dollars > 0  
 
 GROUP BY city  
 
