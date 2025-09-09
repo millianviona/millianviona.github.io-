@@ -22,6 +22,7 @@ The analysis explores sales trends, store performance, and unusual data entries 
 
 #### Queries
 1. Which stores sell the most liquor?
+   
 ``
 SELECT 
   city,
