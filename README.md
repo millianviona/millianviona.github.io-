@@ -41,7 +41,7 @@ This query shows the top 10 cities with the biggest sales.
 <img width="1406" height="478" alt="Screenshot 2025-09-09 113238" src="https://github.com/user-attachments/assets/be32292e-bae8-40b5-9c89-65d9c07420d0" />
 
 
-2. Which stores sell the most liquor?
+**2. Which stores sell the most liquor?**
 
 ```
 SELECT 
