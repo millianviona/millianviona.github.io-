@@ -58,7 +58,7 @@ LIMIT 10
 
 <img width="1404" height="513" alt="Screenshot 2025-09-09 114301" src="https://github.com/user-attachments/assets/99f813d4-acf2-4096-bd6b-74903f6e0174" />
 
-**3. What product categories sell the most in average?**
+**3. What are the top product categories by average revenue**
 
 ```
 SELECT 
