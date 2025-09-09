@@ -24,20 +24,20 @@ The analysis explores sales trends, store performance, and unusual data entries 
 1. Which stores sell the most liquor?
    
 ``
-SELECT
-
+      SELECT
+      
      city,  
   
      ROUND(SUM(sale_dollars)) AS total_revenue  
   
-FROM `bigquery-public-data.iowa_liquor_sales.sales`  
+      FROM `bigquery-public-data.iowa_liquor_sales.sales`  
 
       WHERE sale_dollars > 0  
 
-GROUP BY city  
+      GROUP BY city  
 
-ORDER BY total_revenue DESC  
+      ORDER BY total_revenue DESC  
 
-LIMIT 10  
+      LIMIT 10  
 
 ``
