@@ -20,8 +20,11 @@ The analysis explores sales trends, store performance, and unusual data entries 
 - What are the most popular products?
 - Are there any anomalies in the data (e.g., negative bottles sold)?
 
+#### Assumption
+I only account positive values. 
+
 #### Queries
-1. Which stores sell the most liquor?
+1. Which cities sell the most liquor?
    
 ```
 SELECT 
@@ -33,7 +36,24 @@ GROUP BY city
 ORDER BY total_revenue DESC
 LIMIT 10
 ```
-This query shows the top 10 cities with the biggest sales. I only account positive values as `sale_dollars`, a column for revenue, has negative values.
+This query shows the top 10 cities with the biggest sales.
 
 <img width="1406" height="478" alt="Screenshot 2025-09-09 113238" src="https://github.com/user-attachments/assets/be32292e-bae8-40b5-9c89-65d9c07420d0" />
 
+2. Which stores sell the most liquor?
+
+```
+SELECT 
+  store_name,
+  city,
+  ROUND(SUM(sale_dollars)) AS total_revenue
+FROM `bigquery-public-data.iowa_liquor_sales.sales`
+WHERE sale_dollars > 0
+GROUP BY city, store_name
+ORDER BY total_revenue DESC
+LIMIT 10
+```
+
+This query shows the top 10 stores that sells or earns the most revenue. 
+
+<img width="1404" height="513" alt="Screenshot 2025-09-09 114301" src="https://github.com/user-attachments/assets/99f813d4-acf2-4096-bd6b-74903f6e0174" />
