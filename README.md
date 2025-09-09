@@ -25,7 +25,6 @@ The analysis explores sales trends, store performance, and unusual data entries 
    
 ``
 SELECT
-
   city,  
   
   ROUND(SUM(sale_dollars)) AS total_revenue  
