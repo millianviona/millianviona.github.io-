@@ -5,8 +5,9 @@ I’m passionate about turning data into insights and sharing my learning journe
 
 Visit me on [Kaggle](https://www.kaggle.com/vionamillian), [Tableau](https://public.tableau.com/app/profile/viona.millian/vizzes), and [Linkedin](https://www.linkedin.com/in/viona-millian/).
 
-##Project
+###Project
 ### Project 1: Iowa Liquor Sales Analysis
+---
 
 This project uses the **Iowa Liquor Sales** dataset from BigQuery Public Datasets.  
 The analysis explores sales trends, store performance, and unusual data entries (such as negative bottles sold).
