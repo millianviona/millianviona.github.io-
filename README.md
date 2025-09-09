@@ -57,3 +57,23 @@ LIMIT 10
 ```
 
 <img width="1404" height="513" alt="Screenshot 2025-09-09 114301" src="https://github.com/user-attachments/assets/99f813d4-acf2-4096-bd6b-74903f6e0174" />
+
+**3. What product categories sell the most in average?**
+
+```
+SELECT 
+  category_name,
+  ROUND(AVG(bottles_sold)) AS avg_bottles_sold,
+  ROUND(AVG(sale_dollars)) AS avg_revenue
+FROM `bigquery-public-data.iowa_liquor_sales.sales`
+WHERE 
+  sale_dollars > 0 AND
+  bottles_sold > 0
+GROUP BY category_name
+ORDER BY avg_revenue DESC
+LIMIT 10
+##This query shows the top 10 product categories that has the most average bottles sold and average revenue.
+##There are 50 product categories in total. I only include 10 to make it more compact.
+```
+
+<img width="1403" height="519" alt="Screenshot 2025-09-09 121045" src="https://github.com/user-attachments/assets/ced2de13-b780-49ad-bba7-679e8d5f9b47" />
