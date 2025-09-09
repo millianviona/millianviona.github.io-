@@ -35,7 +35,7 @@ WHERE sale_dollars > 0
 GROUP BY city
 ORDER BY total_revenue DESC
 LIMIT 10
-## This query shows the top 10 cities with the biggest sales.
+##This query shows the top 10 cities with the biggest sales.
 ```
 
 <img width="1406" height="478" alt="Screenshot 2025-09-09 113238" src="https://github.com/user-attachments/assets/be32292e-bae8-40b5-9c89-65d9c07420d0" />
@@ -53,8 +53,7 @@ WHERE sale_dollars > 0
 GROUP BY city, store_name
 ORDER BY total_revenue DESC
 LIMIT 10
+##This query shows the top 10 stores that sells or earns the most revenue. 
 ```
-
-This query shows the top 10 stores that sells or earns the most revenue. 
 
 <img width="1404" height="513" alt="Screenshot 2025-09-09 114301" src="https://github.com/user-attachments/assets/99f813d4-acf2-4096-bd6b-74903f6e0174" />
