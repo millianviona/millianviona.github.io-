@@ -143,6 +143,6 @@ ORDER BY year
 
 <img width="559" height="479" alt="Screenshot 2025-09-09 133638" src="https://github.com/user-attachments/assets/facb41d5-f9a2-466d-9f66-8087ef9613d1" />
 
----
-### Project 1: Iowa Liquor Sales Analysis
+
+### Project 2: the NYC Weather Analysis
 ---
