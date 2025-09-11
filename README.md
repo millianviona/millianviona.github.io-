@@ -144,7 +144,7 @@ ORDER BY year
 <img width="559" height="479" alt="Screenshot 2025-09-09 133638" src="https://github.com/user-attachments/assets/facb41d5-f9a2-466d-9f66-8087ef9613d1" />
 
 
-### Project 2: the NYC Weather Analysis
+### Project 2: The NYC Weather Analysis
 ---
 
 The dataset used in this project was provided as part of the Google Data Analytics Professional Certificate on Coursera. The dataset **NYC Weather** has already been cleaned and prepared by the course provider. My work focuses on further analysis, visualization, and insights.
@@ -165,26 +165,26 @@ The query then returns a table with a column named num_days and returns the valu
 **2. What was the lowest and highest temperature ever recorded and when was it?**
 
 ```
-WITH weather_celcius AS (
+WITH weather_celsius AS (
   SELECT
     date,
-    ROUND(((temperature - 32) *5/9), 2) AS temp_celcius
+    ROUND(((temperature - 32) *5/9), 2) AS temp_celsius
   FROM `semiotic-method-468605-k9.demos.nyc_weather`
   )
 -- Min Temp
 SELECT
   date,
-  temp_celcius
-FROM weather_celcius 
-ORDER BY temp_celcius ASC
+  temp_celsius
+FROM weather_celsius 
+ORDER BY temp_celsius ASC
 LIMIT 1;
 
 -- Max Temp
 SELECT
   date,
-  temp_celcius
-FROM weather_celcius 
-ORDER BY temp_celcius DESC
+  temp_celsius
+FROM weather_celsius 
+ORDER BY temp_celsius DESC
 LIMIT 1
 ```
 or use the query with "qualify" clause in Bigquery.
@@ -202,4 +202,119 @@ QUALIFY temp_celsius = MIN(temp_celsius) OVER()
    OR temp_celsius = MAX(temp_celsius) OVER()
 ```
 
-Both queries return the minimum and the maximum temperature ever recorded in 2020. Since the temperature data is recorded in Fahrenheit, I converted it to Celcius to make it easier to comprehend. In the first query, the min and max function are queried separately, so it will only return one row or observation with the date. In the second query, it returns both lowest and highest temperatures with the dates. The lowest temperature ever recorded in 2020 is -6 Celcius on Feb 15th, 2020 and the highest is 32.22 Celcius on July 27th, 2020.
+Both queries return the minimum and the maximum temperature ever recorded in 2020. Since the temperature data is recorded in Fahrenheit, I converted it to Celsius to make it easier to comprehend in a temporary table called weather_celcius that contains date and temp_celcius. In the first query, the min and max function are queried separately, so it will only return one row or observation with the date. In the second query, it returns both lowest and highest temperatures with the dates. The lowest temperature ever recorded in 2020 is -6 Celsius on Feb 15th, 2020 and the highest is 32.22 Celsius on July 27th, 2020.
+
+**3. How many days each year experienced "extreme cold" and "extreme hot"?**
+
+```
+WITH weather_celsius AS (
+  SELECT
+    date,
+    ROUND(((temperature - 32) * 5/9), 2) AS temp_celsius
+  FROM `semiotic-method-468605-k9.demos.nyc_weather`
+)
+SELECT
+  CASE 
+    WHEN temp_celsius < 0 THEN "Extreme Cold"
+    WHEN temp_celsius >= 32 THEN "Extreme Heat"
+  END AS temp_category,
+  COUNT(DISTINCT date) AS days_count
+FROM weather_celsius
+WHERE temp_celsius < 0
+   OR temp_celsius >= 32
+GROUP BY temp_category
+##Firstly, categorize the temparatures below 0 as "extreme old" and temperatures above 32 as "extreme heat". Otherwise, the query will return each distinct temperature with number of days (meaning it will not be aggregated properly).
+```
+The query returns two categories, Extreme Cold and Extreme Heat. The query also displays the number of days in a year that experienced extreme cold and extreme heat. Over the span of 2020, there are 15 days of extreme cold and 2 days of extreme hot.
+
+**4. What is the average wind speed in 2020?**
+
+```
+SELECT
+  ROUND(AVG(wind_speed), 2) AS avg_wind_speed
+FROM `semiotic-method-468605-k9.demos.nyc_weather`
+```
+
+The average wind speed in 2020 is  9.56 mph.
+
+**5. How many days in a year that the wind speed exceeds 20 mph?**
+
+```
+SELECT
+  CASE 
+    WHEN wind_speed >= 20 THEN "High Wind Speed"
+  END AS wind_speed_category,
+  COUNT(DISTINCT date) as count_days
+FROM `semiotic-method-468605-k9.demos.nyc_weather`
+WHERE wind_speed >= 20
+GROUP BY wind_speed_category
+```
+
+The query returns that the number of days of when the wind speed is high (more than or equal to 20 mph) are 7 days.
+
+**6. Which month experienced "extreme weather" the most?**
+
+```
+WITH weather_celsius AS (
+  SELECT
+    DATE(date) AS date,
+    EXTRACT(MONTH FROM date) AS month,
+    ROUND(((temperature - 32) * 5/9), 2) AS temp_celsius,
+    wind_speed
+  FROM `semiotic-method-468605-k9.demos.nyc_weather`
+)
+SELECT
+  month,
+  COUNT(DISTINCT date) AS extreme_days
+FROM weather_celsius
+WHERE temp_celsius >= 32
+   OR temp_celsius <= 0
+  AND wind_speed >= 20
+GROUP BY month
+ORDER BY month
+```
+
+The query returns 1 day of extreme weather in month 1 (January) and there are 2 days of extreme weather in month 7 (July).
+
+***7. In each month, what are the percentages of extreme weather in 2020?**
+
+```
+WITH weather_celsius AS (
+  SELECT
+    DATE(date) AS date,
+    EXTRACT(MONTH FROM date) AS month,
+    ROUND(((temperature - 32) * 5/9), 2) AS temp_celsius,
+    wind_speed
+  FROM `semiotic-method-468605-k9.demos.nyc_weather`
+),
+monthly_days AS (
+  SELECT
+    month,
+    COUNT(DISTINCT date) AS total_days
+  FROM weather_celsius
+  GROUP BY month
+),
+extreme_days AS (
+  SELECT
+    month,
+    COUNT(DISTINCT date) AS extreme_days
+  FROM weather_celsius
+  WHERE temp_celsius >= 32
+     OR temp_celsius <= 0
+     OR wind_speed >= 20
+  GROUP BY month
+)
+SELECT
+  monthly_days.month,
+  extreme_days.extreme_days,
+  monthly_days.total_days,
+  CONCAT(ROUND((extreme_days.extreme_days / monthly_days.total_days) * 100, 2), '%') AS extreme_percentage
+FROM monthly_days
+LEFT JOIN extreme_days
+  ON monthly_days.month = extreme_days.month
+ORDER BY monthly_days.month;
+
+```
+<img width="443" height="276" alt="Screenshot 2025-09-11 113457" src="https://github.com/user-attachments/assets/528c83df-790a-4391-8ec4-952bcd86b06b" />
+
+There are some blanks in the cells. That is because there are some null values in the data. From the query, we can see that month 1 (January) and 12 (December) have the highest percentage of being in extreme weather.
