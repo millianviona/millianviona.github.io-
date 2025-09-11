@@ -146,3 +146,60 @@ ORDER BY year
 
 ### Project 2: the NYC Weather Analysis
 ---
+
+The dataset used in this project was provided as part of the Google Data Analytics Professional Certificate on Coursera. The dataset **NYC Weather** has already been cleaned and prepared by the course provider. My work focuses on further analysis, visualization, and insights.
+
+The NYC Weather data contains daily weather observations including date, station ID, temperature (fahrenheit), wind speed, and precipitation.
+
+**1. How many days are there in the data?**
+
+```
+SELECT
+  COUNT(DISTINCT(date)) AS num_days
+FROM `semiotic-method-468605-k9.demos.nyc_weather`
+##semiotic-method-468605-k9 is the project ID where the dataset lives, demos is the dataset name, and nyc_weather is the table name.
+```
+
+The query then returns a table with a column named num_days and returns the value '366', stating that the number of days recorded in the data are 366 days from January 1st, 2020 to December 31st, 2020.
+
+**2. What was the lowest and highest temperature ever recorded and when was it?**
+
+```
+WITH weather_celcius AS (
+  SELECT
+    date,
+    ROUND(((temperature - 32) *5/9), 2) AS temp_celcius
+  FROM `semiotic-method-468605-k9.demos.nyc_weather`
+  )
+-- Min Temp
+SELECT
+  date,
+  temp_celcius
+FROM weather_celcius 
+ORDER BY temp_celcius ASC
+LIMIT 1;
+
+-- Max Temp
+SELECT
+  date,
+  temp_celcius
+FROM weather_celcius 
+ORDER BY temp_celcius DESC
+LIMIT 1
+```
+or use the query with "qualify" clause in Bigquery.
+
+```
+WITH weather_celsius AS (
+  SELECT
+    date,
+    ROUND(((temperature - 32) * 5/9), 2) AS temp_celsius
+  FROM `semiotic-method-468605-k9.demos.nyc_weather`
+)
+SELECT date, temp_celsius
+FROM weather_celsius
+QUALIFY temp_celsius = MIN(temp_celsius) OVER()
+   OR temp_celsius = MAX(temp_celsius) OVER()
+```
+
+Both queries return the minimum and the maximum temperature ever recorded in 2020. Since the temperature data is recorded in Fahrenheit, I converted it to Celcius to make it easier to comprehend. In the first query, the min and max function are queried separately, so it will only return one row or observation with the date. In the second query, it returns both lowest and highest temperatures with the dates. The lowest temperature ever recorded in 2020 is -6 Celcius on Feb 15th, 2020 and the highest is 32.22 Celcius on July 27th, 2020.
