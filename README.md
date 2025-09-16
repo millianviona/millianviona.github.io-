@@ -318,3 +318,19 @@ ORDER BY monthly_days.month;
 <img width="443" height="276" alt="Screenshot 2025-09-11 113457" src="https://github.com/user-attachments/assets/528c83df-790a-4391-8ec4-952bcd86b06b" />
 
 There are some blanks in the cells. That is because there are some null values in the data. From the query, we can see that month 1 (January) and 12 (December) have the highest percentage of being in extreme weather.
+
+### Project 3: Creating a Target Table for Google Fiber
+---
+
+The dataset used in this project is downloaded from Coursera as a part of the Coursera's course project. In this dataset, there are three tables named `market_1`, `market_2`, and `market_3`. Each table contains the same type of data, with identical columns such as date created and the number of repeat callers. The three tables (market_1, market_2, and market_3) all cover the same time span from January 1, 2022 to March 31, 2022. By using the UNION ALL function in SQL, these three tables can be combined into a single result set. This allows all the data across the different time periods to be merged into one unified table, making it easier to analyze as a complete dataset.
+
+```
+SELECT *
+FROM `ethereal-apex-472204-j4.mydataset.market_1`
+UNION ALL
+SELECT *
+FROM `ethereal-apex-472204-j4.mydataset.market_2`
+UNION ALL
+SELECT *
+FROM `ethereal-apex-472204-j4.mydataset.market_3`
+```
